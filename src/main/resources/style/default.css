@@ -1,0 +1,153 @@
+.dialog-pane {
+    -fx-background-color: #4f4d4d;
+}
+.dialog-pane .content {
+    -fx-background-color: #4f4d4d;
+}
+.dialog-pane .content.label {
+    -fx-font-family: "HYXiaRiTiW";
+    -fx-font-size: 17;
+    -fx-text-fill: #FFF;
+}
+.dialog-pane .button {
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-border-color: rgba(255,255,255,0.8);
+    -fx-border-style: dotted;
+    -fx-border-width: 0.8;
+    -fx-text-fill: #FFF;
+    -fx-border-radius: 4;
+}
+.dialog-pane .button:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 4, 0, 0, 0);
+    -fx-border-width: 1.2;
+    -fx-border-style: dashed;
+}
+.panel {
+    -fx-background-size: cover;
+    -fx-font-family: "HYXiaRiTiW";
+}
+.panel .label {
+    -fx-font-size: 15;
+}
+.panel .radio-button {
+    -fx-font-size: 14;
+}
+.panel .button {
+    -fx-font-size: 14;
+}
+.panel .title {
+    -fx-font-size: 26;
+}
+.panel .check-box{
+    -fx-font-size: 14;
+}
+.panel .tools {
+    -fx-background-color: rgba(0,0,0,0.5);
+    -fx-background-radius: 8;
+    -fx-border-width: 0.4;
+    -fx-border-style: solid;
+    -fx-border-color: #000;
+    -fx-border-radius: 8;
+}
+.panel .tools .toggle-button {
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-border: none;
+    -fx-text-fill: #FFF;
+}
+.panel .tools .toggle-button:selected {
+    -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 8, 0, 0, 0);
+    -fx-border-color: #FFF;
+    -fx-border-radius: 8;
+    -fx-border-style: dashed;
+    -fx-border-width: 2;
+}
+.content {
+    -fx-background-color: rgba(0,0,0,0.4);
+    -fx-background-radius: 8;
+}
+.content .label{
+    -fx-text-fill: #FFF;
+}
+.content .txt {
+    -fx-background-color: rgba(0,0,0,0.6);
+    -fx-border-width: 0 0 1 0;
+    -fx-border-style: solid;
+    -fx-border-color: #FFF;
+    -fx-text-fill: #FFF;
+}
+.content .btn {
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-border-color: rgba(255,255,255,0.8);
+    -fx-border-style: dotted;
+    -fx-border-width: 0.8;
+    -fx-text-fill: #FFF;
+    -fx-border-radius: 4;
+}
+.content .btn:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 4, 0, 0, 0);
+    -fx-border-width: 1.2;
+    -fx-border-style: dashed;
+}
+.content .check-box {
+    -fx-text-fill: #FFF;
+}
+.content .radio-button{
+    -fx-text-fill: #FFF;
+}
+
+.content .combo-box {
+    -fx-background-color: rgba(0,0,0,0.4);
+    -fx-prompt-text-fill: rgba(255,255,255, 0.6) ;
+    -fx-text-fill: rgb(255,255,255) ;
+    -fx-border-color: rgb(255,255,255);
+    -fx-border-width: 0 0 1 0;
+    -fx-font-size: 15;
+}
+
+.content .combo-box * .label {
+    -fx-font-size: 15;
+}
+.content .combo-box > * {
+    -fx-text-fill: #FFF;
+}
+.content .combo-box .arrow {
+    -fx-background-color: #FFF;
+}
+.content .check-box .box {
+    -fx-background-color: rgba(0,0,0, 0.4);
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+    -fx-border-color:rgb(0,0,0);
+}
+.content .check-box:selected .box .mark {
+    -fx-background-color: rgba(255,255,255,1);
+    -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 8, 0, 0, 0);
+}
+.content .radio-button {
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-text-fill: #FFF;
+}
+.content .radio-button .radio {
+    -fx-background-color: rgba(0,0,0,0.4);
+    -fx-border-color: #000;
+    -fx-border-radius: 9999;
+}
+.content .radio-button:selected .dot {
+    -fx-background-color: #FFF;
+    -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 8, 0, 0, 0);
+}
+.content-proc {
+    -fx-background-color: #4f4d4d;
+}
+.content-proc .label {
+    -fx-font-family: "HYXiaRiTiW";
+    -fx-font-size: 17;
+    -fx-text-fill: #FFF;
+}
+.content-proc .proc .track {
+    -fx-background-color: #696969;
+}
+.content-proc .proc .bar {
+    -fx-background-color: #fcfcf5 ;
+    -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 8, 0, 0, 0);
+}

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="364.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.swdc.skybox.ui.controller.LockerController">
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" styleClass="content" BorderPane.alignment="CENTER">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </BorderPane.margin>
+         <children>
+            <HBox id="hbxTop" alignment="CENTER" prefHeight="158.0" prefWidth="594.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <GridPane prefHeight="199.0" prefWidth="514.0" HBox.hgrow="ALWAYS">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="83.0" />
+                      <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="23.0" minHeight="7.0" prefHeight="14.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="46.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="目标：" GridPane.rowIndex="2" />
+                        <Label text="密码：" GridPane.rowIndex="3" />
+                        <PasswordField fx:id="txtPassword" styleClass="txt" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="8.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <TextField fx:id="txtPath" prefHeight="23.0" prefWidth="287.0" styleClass="txt" HBox.hgrow="ALWAYS" />
+                              <Button mnemonicParsing="false" onAction="#chooseFolder" prefHeight="23.0" prefWidth="89.0" styleClass="btn" text="浏览目录" />
+                              <Button mnemonicParsing="false" onAction="#chooseFile" prefHeight="23.0" prefWidth="88.0" styleClass="btn" text="浏览文件" />
+                           </children>
+                        </HBox>
+                        <Label text="附加配置：" GridPane.rowIndex="4" />
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="8.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <children>
+                              <Label text="强度：" />
+                              <ComboBox fx:id="combLevel" prefHeight="23.0" prefWidth="129.0" />
+                              <Label text="算法：" />
+                              <ComboBox fx:id="combResolver" prefHeight="23.0" prefWidth="134.0" />
+                              <CheckBox fx:id="cbxDelSource" mnemonicParsing="false" text="删除源文件" />
+                           </children>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets left="8.0" />
+                           </padding>
+                        </HBox>
+                        <Label styleClass="title" text="常规" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="对文件或目录进行加密处理。" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                     <HBox.margin>
+                        <Insets left="40.0" right="40.0" />
+                     </HBox.margin>
+                  </GridPane>
+               </children>
+            </HBox>
+            <HBox id="hbxSec" alignment="CENTER" prefHeight="84.0" prefWidth="594.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <GridPane id="gradFolders" prefHeight="163.0" prefWidth="514.0" HBox.hgrow="ALWAYS">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" maxWidth="251.0" minWidth="10.0" prefWidth="85.0" />
+                      <ColumnConstraints hgrow="ALWAYS" maxWidth="429.0" minWidth="10.0" prefWidth="429.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <HBox.margin>
+                        <Insets left="40.0" right="40.0" />
+                     </HBox.margin>
+                     <children>
+                        <Label styleClass="title" text="目录">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label text="对目录的选项。" GridPane.columnIndex="1" />
+                        <Label text="处理方式：" GridPane.rowIndex="1" />
+                        <HBox id="folderRadios" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="8.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <padding>
+                              <Insets left="8.0" />
+                           </padding>
+                           <children>
+                              <RadioButton id="SINGLE_FILE" mnemonicParsing="false" selected="true" text="加密为单一文件" />
+                              <RadioButton id="MULTI" mnemonicParsing="false" text="分别加密所有文件" />
+                              <RadioButton id="MULTI_ARCHIVE" mnemonicParsing="false" text="分别加密并压缩" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </GridPane>
+               </children>
+            </HBox>
+            <HBox id="hbxRd" alignment="CENTER_RIGHT" prefHeight="70.0" prefWidth="594.0" spacing="8.0">
+               <children>
+                  <Label text="请牢记密码，加密是用了加密算法的，忘记密码就解不开了。" />
+                  <Button layoutX="396.0" layoutY="14.0" mnemonicParsing="false" onAction="#executeProcess" prefHeight="37.0" prefWidth="92.0" styleClass="btn" text="执行">
+                     <HBox.margin>
+                        <Insets right="8.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
