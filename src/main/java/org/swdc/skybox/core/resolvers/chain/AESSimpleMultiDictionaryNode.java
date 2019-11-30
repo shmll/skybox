@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
 import org.swdc.skybox.core.DataResolver;
-import org.swdc.skybox.core.NotSupportException;
+import org.swdc.skybox.core.exception.NotSupportException;
 import org.swdc.skybox.core.ResolveChain;
 import org.swdc.skybox.core.dataobject.EncodeOptions;
 import org.swdc.skybox.core.dataobject.EncryptedHeader;

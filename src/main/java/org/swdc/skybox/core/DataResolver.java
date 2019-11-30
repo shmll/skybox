@@ -3,6 +3,9 @@ package org.swdc.skybox.core;
 import org.springframework.context.ApplicationEvent;
 import org.swdc.skybox.core.dataobject.EncodeLevel;
 import org.swdc.skybox.core.dataobject.EncodeOptions;
+import org.swdc.skybox.core.dataobject.EncryptedHeader;
+import org.swdc.skybox.core.exception.InvalidPasswordException;
+import org.swdc.skybox.core.exception.NotSupportException;
 
 import java.io.File;
 import java.util.List;
@@ -28,8 +31,14 @@ public interface DataResolver {
         }
     }
 
-    default void decode(File input,String password){
-
+    default void decode(File input, String password, EncryptedHeader header){
+        try {
+            getChain().doDecrypt(input,password,header);
+        } catch (InvalidPasswordException ex) {
+            ex.printStackTrace();
+        } catch (NotSupportException ex) {
+            ex.printStackTrace();
+        }
     }
 
     String getName();

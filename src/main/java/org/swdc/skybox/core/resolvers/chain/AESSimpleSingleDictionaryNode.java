@@ -7,6 +7,9 @@ import org.swdc.skybox.core.*;
 import org.swdc.skybox.core.dataobject.DictionaryEntry;
 import org.swdc.skybox.core.dataobject.EncodeOptions;
 import org.swdc.skybox.core.dataobject.EncryptedHeader;
+import org.swdc.skybox.core.exception.InvalidPasswordException;
+import org.swdc.skybox.core.exception.NotSupportException;
+import org.swdc.skybox.core.resolvers.AESSimpleResolver;
 import org.swdc.skybox.events.ProgressEvent;
 import org.swdc.skybox.utils.DataUtils;
 
@@ -15,6 +18,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
+import java.security.Key;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +52,13 @@ public class AESSimpleSingleDictionaryNode implements ResolveChain {
 
     @Override
     public boolean supportDec(File input, String password, EncryptedHeader header) {
-        return false;
+        if (!header.getIsFolder()) {
+            return false;
+        }
+        if (header.getFolderOffset() <= 0) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -100,7 +110,7 @@ public class AESSimpleSingleDictionaryNode implements ResolveChain {
             resolver.emitEvent(new ProgressEvent("正在结束",0));
 
             DataInputStream dataInputStream = new DataInputStream(new FileInputStream(encoded));
-            byte[] buffer = new byte[1024 * 1024];
+            byte[] buffer = new byte[AESSimpleResolver.AES_ENCODE_BLOCK];
             long filesize = 0;
             while ((dataInputStream.read(buffer) > 0)) {
                 filesize = filesize + buffer.length;
@@ -122,7 +132,28 @@ public class AESSimpleSingleDictionaryNode implements ResolveChain {
     }
 
     @Override
-    public void doDecrypt(File input, String password, EncryptedHeader header) {
+    public void doDecrypt(File input, String password, EncryptedHeader header) throws NotSupportException, InvalidPasswordException {
+        if (!this.supportDec(input,password,header)) {
+            if (this.next != null) {
+                this.next.doDecrypt(input,password,header);
+                return;
+            } else {
+                throw new NotSupportException();
+            }
+        }
+        try {
+            RandomAccessFile file = new RandomAccessFile(input, "r");
+
+            for (DictionaryEntry entry : header.getEntries()) {
+                decodeFileEntry(file,entry,null);
+            }
+
+        } catch (Exception ex) {
+
+        }
+    }
+
+    private void decodeFileEntry(RandomAccessFile file, DictionaryEntry entry, Key key) {
 
     }
 

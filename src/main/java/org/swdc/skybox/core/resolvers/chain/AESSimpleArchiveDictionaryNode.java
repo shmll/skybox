@@ -1,7 +1,7 @@
 package org.swdc.skybox.core.resolvers.chain;
 
 import org.swdc.skybox.core.DataResolver;
-import org.swdc.skybox.core.NotSupportException;
+import org.swdc.skybox.core.exception.NotSupportException;
 import org.swdc.skybox.core.dataobject.EncodeOptions;
 import org.swdc.skybox.core.dataobject.EncryptedHeader;
 import org.swdc.skybox.events.ProgressEvent;

@@ -34,6 +34,7 @@ public class ProgressView extends AbstractFxmlView {
             stage.setScene(scene);
             stage.setResizable(false);
             stage.setMaximized(false);
+            stage.initStyle(StageStyle.UNDECORATED);
             stage.initOwner(GUIState.getStage());
             stage.initModality(Modality.APPLICATION_MODAL);
         });

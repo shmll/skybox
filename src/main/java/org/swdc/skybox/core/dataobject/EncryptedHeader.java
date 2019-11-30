@@ -16,6 +16,10 @@ public class EncryptedHeader {
     private long folderOffset;
     private String name;
 
+    public EncryptedHeader() {
+
+    }
+
     public EncryptedHeader(String encodeLevel, String resolverName, Boolean isFolder, List<DictionaryEntry> entries) {
         this.encodeLevel = encodeLevel;
         this.resolverName = resolverName;

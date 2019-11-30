@@ -5,16 +5,17 @@ import lombok.Setter;
 import org.swdc.skybox.core.*;
 import org.swdc.skybox.core.dataobject.EncodeOptions;
 import org.swdc.skybox.core.dataobject.EncryptedHeader;
+import org.swdc.skybox.core.exception.InvalidPasswordException;
+import org.swdc.skybox.core.exception.NotSupportException;
+import org.swdc.skybox.core.resolvers.AESSimpleResolver;
 import org.swdc.skybox.events.ProgressEvent;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 
 public class AESSimpleFileNode implements ResolveChain {
@@ -38,7 +39,13 @@ public class AESSimpleFileNode implements ResolveChain {
 
     @Override
     public boolean supportDec(File input, String password, EncryptedHeader header) {
-        return false;
+        if (!header.getResolverName().equals(this.resolver.getClass().getName())) {
+            return false;
+        }
+        if (header.getIsFolder()) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -53,10 +60,12 @@ public class AESSimpleFileNode implements ResolveChain {
         }
         try {
             KeyGenerator generator = KeyGenerator.getInstance("AES");
+            SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG") ;
+            secureRandom.setSeed(password.getBytes(StandardCharsets.UTF_8));
             if (options.getLevel().getValue() == 0) {
-                generator.init(128, new SecureRandom(password.getBytes("utf8")));
+                generator.init(128, secureRandom);
             } else {
-                generator.init(256, new SecureRandom(password.getBytes("utf8")));
+                generator.init(256, secureRandom);
             }
 
             resolver.emitEvent(new ProgressEvent("正在准备密钥", 4));
@@ -87,7 +96,7 @@ public class AESSimpleFileNode implements ResolveChain {
             FileOutputStream outputStream = new FileOutputStream(encoded);
             outputStream.write(headerData);
             resolver.emitEvent(new ProgressEvent("写入数据", 10));
-            byte[] data = new byte[1024 * 1024];
+            byte[] data = new byte[AESSimpleResolver.AES_ENCODE_BLOCK];
             long passed = 0;
             while ((dataInputStream.read(data)) > 0) {
                 passed = passed + data.length;
@@ -109,7 +118,56 @@ public class AESSimpleFileNode implements ResolveChain {
     }
 
     @Override
-    public void doDecrypt(File input, String password, EncryptedHeader header) {
+    public void doDecrypt(File input, String password, EncryptedHeader header) throws InvalidPasswordException, NotSupportException {
+        if (!supportDec(input,password,header)) {
+            if (this.next != null) {
+                this.next.doDecrypt(input,password,header);
+                return;
+            } else {
+                throw new NotSupportException();
+            }
+        }
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            byte[] data = mapper.writeValueAsBytes(header);
+
+            FileInputStream fileInputStream = new FileInputStream(input);
+            fileInputStream.skip(data.length);
+
+            File decode = new File(input.getAbsoluteFile().getParentFile().getPath() + File.separator + header.getName());
+
+            KeyGenerator generator = KeyGenerator.getInstance("AES");
+            SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG") ;
+            secureRandom.setSeed(password.getBytes(StandardCharsets.UTF_8));
+
+            if (Integer.valueOf(header.getEncodeLevel()) == 0) {
+                generator.init(128, secureRandom);
+            } else {
+                generator.init(256, secureRandom);
+            }
+            SecretKey keyX = generator.generateKey();
+            byte[] rawX = keyX.getEncoded();
+            SecretKey keyY = new SecretKeySpec(rawX, "AES");
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.DECRYPT_MODE, keyY);
+
+            FileOutputStream outputStream = new FileOutputStream(decode);
+
+            try {
+                byte[] buffer = new byte[AESSimpleResolver.AES_DECODE_BLOCK];
+                while (fileInputStream.read(buffer) > 0) {
+                    byte[] decodeData = cipher.doFinal(buffer);
+                    outputStream.write(decodeData);
+                }
+                outputStream.flush();
+                outputStream.close();
+                fileInputStream.close();
+            } catch (Exception ex) {
+                throw new InvalidPasswordException(ex);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
     }
 

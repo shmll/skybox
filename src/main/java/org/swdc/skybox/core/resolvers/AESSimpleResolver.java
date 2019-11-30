@@ -20,6 +20,9 @@ public class AESSimpleResolver implements DataResolver {
 
     private List<EncodeLevel> encodeLevels;
 
+    public static final int AES_DECODE_BLOCK = 1048592;
+    public static final int AES_ENCODE_BLOCK = 1024 * 1024;
+
     @Autowired
     private ApplicationEventPublisher publisher;
 
