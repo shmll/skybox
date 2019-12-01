@@ -77,6 +77,7 @@ public class StartView extends AbstractFxmlView {
         stage.setWidth(706);
         stage.setHeight(460);
         stage.setTitle("天空盒");
+        stage.getIcons().addAll(AwsomeIconData.getImageIcons());
     }
 
     private void onToggleChange(Observable observable, Toggle oldTog, Toggle newTog) {

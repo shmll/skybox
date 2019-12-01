@@ -30,8 +30,17 @@ public class AwsomeIconData {
     @Getter
     private static Map<String, Character> awesomeMap;
 
+    @Getter
+    private static List<Image> imageIcons ;
+
     static {
         try{
+            imageIcons = Arrays.asList(new Image(new ClassPathResource("icon/box16.png").getInputStream()),
+                    new Image(new ClassPathResource("icon/box24.png").getInputStream()),
+                    new Image(new ClassPathResource("icon/box32.png").getInputStream()),
+                    new Image(new ClassPathResource("icon/box48.png").getInputStream()),
+                    new Image(new ClassPathResource("icon/box64.png").getInputStream()),
+                    new Image(new ClassPathResource("icon/box72.png").getInputStream()));
             fontIconSmall =  Font
                     .loadFont(new ClassPathResource("/icon/fontawesome-webfont@4.5.0.ttf").getInputStream(), 14);
             fontIcon = Font

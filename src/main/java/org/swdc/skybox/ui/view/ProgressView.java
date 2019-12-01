@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.swdc.skybox.config.ApplicationConfig;
+import org.swdc.skybox.ui.AwsomeIconData;
 import org.swdc.skybox.utils.UIUtils;
 
 import javax.annotation.PostConstruct;
@@ -37,6 +38,7 @@ public class ProgressView extends AbstractFxmlView {
             stage.initStyle(StageStyle.UNDECORATED);
             stage.initOwner(GUIState.getStage());
             stage.initModality(Modality.APPLICATION_MODAL);
+            stage.getIcons().addAll(AwsomeIconData.getImageIcons());
         });
     }
 
