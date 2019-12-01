@@ -138,6 +138,9 @@
 }
 .content-proc {
     -fx-background-color: #4f4d4d;
+    -fx-border-style: solid;
+    -fx-border-color: #000;
+    -fx-border-width: 0.4;
 }
 .content-proc .label {
     -fx-font-family: "HYXiaRiTiW";

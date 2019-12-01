@@ -4,8 +4,10 @@ import org.springframework.context.ApplicationEvent;
 import org.swdc.skybox.core.dataobject.EncodeLevel;
 import org.swdc.skybox.core.dataobject.EncodeOptions;
 import org.swdc.skybox.core.dataobject.EncryptedHeader;
+import org.swdc.skybox.core.exception.EncryptException;
 import org.swdc.skybox.core.exception.InvalidPasswordException;
 import org.swdc.skybox.core.exception.NotSupportException;
+import org.swdc.skybox.core.exception.ResolveExceptionEvent;
 
 import java.io.File;
 import java.util.List;
@@ -27,7 +29,9 @@ public interface DataResolver {
         try {
             getChain().doEncrypt(input,password,options);
         } catch (NotSupportException ex) {
-            ex.printStackTrace();
+            emitEvent(new ResolveExceptionEvent(ex));
+        } catch (EncryptException ex) {
+            emitEvent(new ResolveExceptionEvent(ex));
         }
     }
 
@@ -35,9 +39,11 @@ public interface DataResolver {
         try {
             getChain().doDecrypt(input,password,header);
         } catch (InvalidPasswordException ex) {
-            ex.printStackTrace();
+            emitEvent(new ResolveExceptionEvent(ex));
         } catch (NotSupportException ex) {
-            ex.printStackTrace();
+            emitEvent(new ResolveExceptionEvent(ex));
+        } catch (EncryptException ex) {
+            emitEvent(new ResolveExceptionEvent(ex));
         }
     }
 

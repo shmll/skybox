@@ -2,6 +2,7 @@ package org.swdc.skybox.core;
 
 import org.swdc.skybox.core.dataobject.EncodeOptions;
 import org.swdc.skybox.core.dataobject.EncryptedHeader;
+import org.swdc.skybox.core.exception.EncryptException;
 import org.swdc.skybox.core.exception.InvalidPasswordException;
 import org.swdc.skybox.core.exception.NotSupportException;
 
@@ -41,7 +42,7 @@ public interface ResolveChain {
      * @param options 加密选项
      * @throws NotSupportException 不支持此选项的时候
      */
-    void doEncrypt(File input, String password, EncodeOptions options) throws NotSupportException;
+    void doEncrypt(File input, String password, EncodeOptions options) throws NotSupportException, EncryptException;
 
     /**
      * 解密执行
@@ -53,7 +54,7 @@ public interface ResolveChain {
      * @throws InvalidPasswordException 密码错误的时候
      * @throws NotSupportException 不支持此header的文件的时候
      */
-    void doDecrypt(File input, String password, EncryptedHeader header) throws InvalidPasswordException, NotSupportException;
+    void doDecrypt(File input, String password, EncryptedHeader header) throws InvalidPasswordException, NotSupportException, EncryptException;
 
     /**
      * 返回本链条的下一个加密节点

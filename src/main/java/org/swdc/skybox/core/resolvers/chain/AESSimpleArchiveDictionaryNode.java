@@ -1,6 +1,8 @@
 package org.swdc.skybox.core.resolvers.chain;
 
 import org.swdc.skybox.core.DataResolver;
+import org.swdc.skybox.core.exception.EncryptException;
+import org.swdc.skybox.core.exception.InvalidPasswordException;
 import org.swdc.skybox.core.exception.NotSupportException;
 import org.swdc.skybox.core.dataobject.EncodeOptions;
 import org.swdc.skybox.core.dataobject.EncryptedHeader;
@@ -42,7 +44,7 @@ public class AESSimpleArchiveDictionaryNode extends AESSimpleMultiDictionaryNode
     }
 
     @Override
-    public void doEncrypt(File input, String password, EncodeOptions options) throws NotSupportException {
+    public void doEncrypt(File input, String password, EncodeOptions options) throws NotSupportException, EncryptException {
         super.doEncrypt(input,password,options);
         try {
             File parent = input.getAbsoluteFile().getParentFile();
@@ -58,6 +60,8 @@ public class AESSimpleArchiveDictionaryNode extends AESSimpleMultiDictionaryNode
             if (options.getDeleteSource()) {
                 DataUtils.deleteFile(input);
             }
+        }catch (EncryptException|NotSupportException ex) {
+            throw ex;
         } catch (Exception ex) {
             ex.printStackTrace();
         }

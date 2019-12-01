@@ -3,6 +3,7 @@ package org.swdc.skybox.ui.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.felixroske.jfxsupport.FXMLController;
 import de.felixroske.jfxsupport.GUIState;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.swdc.skybox.config.ApplicationConfig;
 import org.swdc.skybox.core.DataResolver;
 import org.swdc.skybox.core.dataobject.EncryptedHeader;
+import org.swdc.skybox.ui.view.ProgressView;
 import org.swdc.skybox.utils.UIUtils;
 
 import java.io.File;
@@ -21,6 +23,7 @@ import java.io.FileInputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
 
 @FXMLController
 public class UnlockerController implements Initializable {
@@ -39,6 +42,13 @@ public class UnlockerController implements Initializable {
 
     @Autowired
     private ApplicationConfig config;
+
+    @Autowired
+    private ExecutorService asyncExecutor;
+
+    @Autowired
+    private ProgressView progressView;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -63,12 +73,22 @@ public class UnlockerController implements Initializable {
             fileInputStream.close();
 
             Class<?> resolverClazz =  Class.forName(header.getResolverName());
-            for (DataResolver resolver : resolvers) {
-                if (resolver.getClass() == resolverClazz) {
-                    resolver.decode(input,txtPassword.getText(),header);
-                    break;
+            asyncExecutor.submit(() -> {
+                Platform.runLater(() -> progressView.show());
+                for (DataResolver resolver : resolvers) {
+                    if (resolver.getClass() == resolverClazz) {
+                        resolver.decode(input,txtPassword.getText(),header);
+                        break;
+                    }
                 }
-            }
+                Platform.runLater(() -> {
+                    progressView.hide();
+                    UIUtils.showAlertDialog("解密完成！","提示", Alert.AlertType.INFORMATION,config);
+                });
+                if (chkDelSource.isSelected()) {
+                    input.delete();
+                }
+            });
         } catch (Exception ex) {
             ex.printStackTrace();
         }
