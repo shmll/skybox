@@ -13,13 +13,13 @@
     -fx-background-color: rgba(0,0,0,0);
     -fx-border-color: rgba(255,255,255,0.8);
     -fx-border-style: dotted;
-    -fx-border-width: 0.8;
+    -fx-border-width: 1;
     -fx-text-fill: #FFF;
     -fx-border-radius: 4;
 }
 .dialog-pane .button:hover {
     -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 4, 0, 0, 0);
-    -fx-border-width: 1.2;
+    -fx-border-width: 1;
     -fx-border-style: dashed;
 }
 .panel {
@@ -135,6 +135,47 @@
 .content .radio-button:selected .dot {
     -fx-background-color: #FFF;
     -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 8, 0, 0, 0);
+}
+.config-tab {
+    -fx-background-color: rgba(0,0,0,0.2);
+}
+.config-tab .tab-header-background {
+    -fx-background-color: rgba(0,0,0,0.3);
+}
+.config-tab .tab:selected{
+    -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 8, 0, 0, 0);
+    -fx-border-width: 0.8 0.8 0 0.8;
+    -fx-border-style: solid;
+    -fx-border-color: #FFF;
+}
+.config-tab .tab:selected .tab-label {
+    -fx-text-fill: #FFF;
+}
+.config-tab .tab{
+    -fx-border-insets: 0;
+    -fx-background-color: rgba(0,0,0,0.2);
+    -fx-border-color: rgba(255,255,255,0.4);
+    -fx-border-radius: 8 8 0 0;
+    -fx-background-radius: 8 8 0 0;
+    -fx-border-style: dashed;
+    -fx-border-width: 1;
+    -fx-outline: none;
+    -fx-font-size: 14;
+}
+.config-sheet {
+    -fx-background: rgba(0,0,0,0.2);
+}
+.config-sheet .label{
+    -fx-font-size: 14;
+}
+.config-sheet .tool-bar {
+    -fx-background-color: rgba(120,106,123,0.2);
+}
+.config-sheet .tool-bar .text-field {
+    -fx-border-style: dashed;
+    -fx-border-width: 0px;
+    -fx-border-color: rgba(0,0,0,0);
+    -fx-background-color: rgba(255,255,255,0.2);
 }
 .content-proc {
     -fx-background-color: #4f4d4d;

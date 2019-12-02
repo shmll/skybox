@@ -24,8 +24,6 @@ import org.swdc.skybox.utils.UIUtils;
 import javax.annotation.PostConstruct;
 
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 import static org.swdc.skybox.utils.UIUtils.findById;
 
@@ -47,7 +45,7 @@ public class StartView extends AbstractFxmlView {
     public void initUI() throws Exception {
         BorderPane pane = (BorderPane) this.getView();
         UIUtils.configUI(pane ,config);
-        pane.setStyle(pane.getStyle() + "-fx-background-image:url("  + ApplicationConfig.getConfigLocation() + "images/" + config.getBackground() + ");");
+        pane.setStyle(pane.getStyle() + "-fx-background-image:url("  + ApplicationConfig.getConfigLocation() + "images/background/" + config.getBackground() + ");");
 
         ToolBar toolBar = (ToolBar)pane.getBottom();
         configButton("setting", toolBar, "cog");

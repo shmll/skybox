@@ -1,0 +1,11 @@
+.notification-bar > .pane {
+    -fx-background-color: #4f4d4d;
+    -fx-padding: 12;
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.4), 11, 0.0, 0, 3);
+    -fx-background-insets: 0, 1, 2;
+}
+.notification-bar > .pane .label {
+    -fx-font-family: "HYXiaRiTiW";
+    -fx-font-size: 18;
+    -fx-text-fill: #FFF;
+}
